@@ -14,13 +14,20 @@ jobs:
       - name: Unzip project
         run: unzip AbsensiIndonesiaMaju.zip
 
-      - name: Give permission to gradlew
+      - name: Cari dan beri izin ke gradlew
+        id: gradle_setup
         run: |
-          chmod +x */*/gradlew
+          export GRADLEW=$(find . -type f -name gradlew | head -n 1)
+          if [ -z "$GRADLEW" ]; then
+            echo "❌ File gradlew tidak ditemukan"
+            exit 1
+          fi
+          chmod +x "$GRADLEW"
+          echo "GRADLEW=$GRADLEW" >> $GITHUB_ENV
 
       - name: Build APK
         run: |
-          cd */*
+          cd $(dirname $GRADLEW)
           ./gradlew assembleDebug
 
       - name: Upload APK
@@ -28,4 +35,4 @@ jobs:
         with:
           name: Absensi-Indonesia-Maju-APK
           path: |
-            */*/app/build/outputs/apk/debug/*.apk
+            **/app/build/outputs/apk/debug/*.apk
