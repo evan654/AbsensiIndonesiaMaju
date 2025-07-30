@@ -14,17 +14,16 @@ jobs:
       - name: Unzip project
         run: unzip AbsensiIndonesiaMaju.zip
 
-      - name: Grant permission to gradlew
-        run: chmod +x "./Absensi Indonesia Maju/Absensi Indonesia Maju/gradlew"
+      - name: Find and give permission to gradlew
+        run: chmod +x */*/gradlew
 
       - name: Build APK
         run: |
-          cd "Absensi Indonesia Maju/Absensi Indonesia Maju"
+          cd */*
           ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Absensi-Indonesia-Maju-APK
-          path: |
-            Absensi Indonesia Maju/Absensi Indonesia Maju/app/build/outputs/apk/debug/*.apk
+          path: */*/app/build/outputs/apk/debug/*.apk
