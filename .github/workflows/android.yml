@@ -14,7 +14,7 @@ jobs:
       - name: Unzip project
         run: unzip AbsensiIndonesiaMaju.zip
 
-      - name: Find and give permission to gradlew
+      - name: Give permission to gradlew
         run: chmod +x */*/gradlew
 
       - name: Build APK
